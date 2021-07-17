@@ -63,7 +63,7 @@ class Watchlist(models.Model):
         return self.id
 
 
-class Closed_Bid(models.Model):
+class ClosedBid(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     winner = models.CharField(max_length=100)
@@ -76,7 +76,7 @@ class Closed_Bid(models.Model):
         return self.id
 
 
-class All_Listings(models.Model):
+class AllListing(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
