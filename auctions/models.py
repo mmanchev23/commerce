@@ -25,3 +25,14 @@ class Listing(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Bid(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    bid = models.IntegerField()
+
+    def __str__(self):
+        return self.title
