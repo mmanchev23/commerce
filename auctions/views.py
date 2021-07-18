@@ -420,8 +420,11 @@ def close_bid_view(request, id):
 
 
 def my_winnings_view(request):
+    context = {}
+
     if request.user.username:
         items = []
+
         try:
             wonitems = ClosedBid.objects.filter(winner=request.user.username)
             for w in wonitems:
@@ -434,10 +437,13 @@ def my_winnings_view(request):
             wcount=len(w)
         except:
             wcount=None
-        return render(request,'auctions/mywinnings.html',{
+
+        context = {
             "items":items,
             "wcount":wcount,
             "wonitems":wonitems
-        })
+        }
+
+        return render(request,'auctions/mywinnings.html', context)
     else:
         return redirect('index')
