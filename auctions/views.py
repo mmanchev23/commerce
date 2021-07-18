@@ -295,3 +295,57 @@ def add_watchlist_view(request, id):
         return redirect('listings', id=id)
     else:
         return redirect('index')
+
+
+# Done
+def remove_watchlist_view(request, id):
+    listing = Listing.objects.get(id=id)
+
+    if request.user.username:
+        try:
+            watchlist = Watchlist.objects.get(user=request.user.username, listing=listing)
+            watchlist.delete()
+            return redirect('listings', id=id)
+        except:
+            return redirect('listings', id=id)
+    else:
+        return redirect('index')
+
+
+# Done
+def watchlist_view(request, user):
+    context = {}
+
+    if request.user.username:
+        try:
+            watchlist = Watchlist.objects.filter(user=user)
+            items = []
+
+            for item in watchlist:
+                items.append(Listing.objects.filter(title=item.listing))
+            try:
+                watchlist = Watchlist.objects.filter(user=request.user.username)
+                watchlist_count = len(watchlist)
+            except:
+                watchlist_count=None
+
+            context = {
+                "items": items,
+                "watchlist_count": watchlist_count
+            }
+
+            return render(request,"auctions/watchlist.html", context)
+        except:
+            try:
+                watchlist = Watchlist.objects.filter(user=request.user.username)
+                watchlist_count = len(watchlist)
+            except:
+                watchlist_count = None
+
+            context = {
+                "items": None,
+                "wcount": watchlist_count
+            }
+            return render(request, "auctions/watchlist.html", )
+    else:
+        return redirect('index')
