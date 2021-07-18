@@ -13,6 +13,7 @@ urlpatterns = [
     path("category/<str:category>/", views.category_view, name="category"),
     path("create/", views.create_view, name="create"),
     path("submit/", views.submit_view, name="submit"),
+    path("listings/<int:id>", views.listings_view, name="listings"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

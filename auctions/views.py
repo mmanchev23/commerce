@@ -150,7 +150,7 @@ def submit_view(request):
             listing.image = request.POST['image']
 
         listing.save()
-        
+
         all_listing = AllListing()
         items = Listing.objects.all()
         for item in items:
@@ -166,3 +166,54 @@ def submit_view(request):
         return redirect('index')
     else:
         return redirect('index')
+
+
+def listings_view(request, id):
+    context = {}
+
+    try:
+        listing = Listing.objects.get(id=id)
+    except:
+        return redirect('index')
+
+    try:
+        comments = Comment.objects.filter(listing=id)
+    except:
+        comments = None
+
+    if request.user.username:
+        try:
+            if Watchlist.objects.get(user=request.user.username, listing=id):
+                added=True
+        except:
+            added = False
+
+        try:
+            listing = Listing.objects.get(id=id)
+            if listing.owner == request.user.username:
+                owner=True
+            else:
+                owner=False
+        except:
+            return redirect('index')
+    else:
+        added=False
+        owner=False
+
+    try:
+        watchlist = Watchlist.objects.filter(user=request.user.username)
+        watchlist_count=len(watchlist)
+    except:
+        watchlist_count=None
+
+    context = {
+        "listing": listing,
+        "error": request.COOKIES.get('error'),
+        "errorgreen": request.COOKIES.get('errorgreen'),
+        "comments": comments,
+        "added": added,
+        "owner": owner,
+        "watchlist_count": watchlist_count
+    }
+
+    return render(request,"auctions/listings.html", context)
