@@ -119,3 +119,19 @@ def category_view(request, category):
     }
 
     return render(request,"auctions/category.html", context)
+
+
+def create_view(request):
+    context = {}
+
+    try:
+        watchlists = Watchlist.objects.filter(user=request.user.username)
+        watchlists_count = len(watchlists)
+    except:
+        watchlists_count = None
+
+    context = {
+        "watchlists_count": watchlists_count
+    }
+
+    return render(request,"auctions/create.html", context)
