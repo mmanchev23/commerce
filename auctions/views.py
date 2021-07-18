@@ -349,3 +349,95 @@ def watchlist_view(request, user):
             return render(request, "auctions/watchlist.html", )
     else:
         return redirect('index')
+
+
+# Done
+def close_bid_view(request, id):
+    context = {}
+
+    if request.user.username:
+        try:
+            listing = Listing.objects.get(id=id)
+        except:
+            return redirect('index')
+            
+        closed_bid = ClosedBid()
+        title = listing.title
+        closed_bid.owner = listing.owner
+        closed_bid.listingid = id
+        try:
+            bidrow = Bid.objects.get(listingid=id, bid=listing.price)
+            closed_bid.winner = bidrow.user
+            closed_bid.winprice = bidrow.bid
+            closed_bid.save()
+            bidrow.delete()
+        except:
+            closed_bid.winner = listing.owner
+            closed_bid.winprice = listing.price
+            closed_bid.save()
+        try:
+            if Watchlist.objects.filter(listingid=id):
+                watchrow = Watchlist.objects.filter(listingid=id)
+                watchrow.delete()
+            else:
+                pass
+        except:
+            pass
+        try:
+            crow = Comment.objects.filter(listingid=id)
+            crow.delete()
+        except:
+            pass
+        try:
+            brow = Bid.objects.filter(listingid=id)
+            brow.delete()
+        except:
+            pass
+        try:
+            closed_bid_list=ClosedBid.objects.get(listingid=id)
+        except:
+            closed_bid.owner = listing.owner
+            closed_bid.winner = listing.owner
+            closed_bid.listingid = id
+            closed_bid.winprice = listing.price
+            closed_bid.save()
+            closed_bid_list=ClosedBid.objects.get(listingid=id)
+
+        listing.delete()
+        try:
+            watchlist = Watchlist.objects.filter(user=request.user.username)
+            watchlist_count = len(watchlist)
+        except:
+            watchlist_count=None
+        return render(request,"auctions/winning.html",{
+            "cb": closed_bid_list,
+            "title": title,
+            "wcount": watchlist_count
+        })   
+
+    else:
+        return redirect('index')
+
+
+def my_winnings_view(request):
+    if request.user.username:
+        items = []
+        try:
+            wonitems = ClosedBid.objects.filter(winner=request.user.username)
+            for w in wonitems:
+                items.append(AllListing.objects.filter(listing=w.listing))
+        except:
+            wonitems = None
+            items = None
+        try:
+            w = Watchlist.objects.filter(user=request.user.username)
+            wcount=len(w)
+        except:
+            wcount=None
+        return render(request,'auctions/mywinnings.html',{
+            "items":items,
+            "wcount":wcount,
+            "wonitems":wonitems
+        })
+    else:
+        return redirect('index')
