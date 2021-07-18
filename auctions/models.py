@@ -19,12 +19,22 @@ class Listing(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))])
     category = models.CharField(max_length=100)
-    link = models.CharField(max_length=100, default=None, blank=True, null=True)
+    image = models.ImageField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     def __str__(self):
         return self.title
+
+    @property
+    def imageURL(self):
+
+        try:
+            url = self.image.url
+        except:
+            url = ''
+
+        return url
 
 
 class Bid(models.Model):
@@ -81,9 +91,19 @@ class AllListing(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     description = models.TextField()
-    link = models.CharField(max_length=100, default=None, blank=True, null=True)
+    image = models.ImageField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     def __str__(self):
         return self.title
+
+    @property
+    def imageURL(self):
+
+        try:
+            url = self.image.url
+        except:
+            url = ''
+
+        return url
