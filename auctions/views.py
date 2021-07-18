@@ -8,6 +8,7 @@ from .models import *
 from datetime import datetime
 
 
+# Done
 def index_view(request):
     listings = Listing.objects.all()
     context = {}
@@ -26,6 +27,7 @@ def index_view(request):
     return render(request, "auctions/index.html", context)
 
 
+# Done
 def register_view(request):
     context = {}
 
@@ -37,7 +39,7 @@ def register_view(request):
 
         if password != confirmation:
             context = {
-                "message": "Passwords must match."
+                "message": "Passwords must match!"
             }
 
             return render(request, "auctions/register.html", context)
@@ -47,7 +49,7 @@ def register_view(request):
             user.save()
         except IntegrityError:
             context = {
-                "message": "Username already taken."
+                "message": "Username already taken!"
             }
 
             return render(request, "auctions/register.html", context)
@@ -58,6 +60,7 @@ def register_view(request):
         return render(request, "auctions/register.html")
 
 
+# Done
 def login_view(request):
     context = {}
 
@@ -79,11 +82,13 @@ def login_view(request):
         return render(request, "auctions/login.html")
 
 
+# Done
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
 
+# Done
 def categories_view(request):
     listings = Listing.objects.raw("SELECT * FROM auctions_listing GROUP BY category")
     context = {}
@@ -102,6 +107,7 @@ def categories_view(request):
     return render(request, "auctions/categories.html", context)
 
 
+# Done
 def category_view(request, category):
     category_items = Listing.objects.filter(category=category)
     context = {}
@@ -121,6 +127,7 @@ def category_view(request, category):
     return render(request,"auctions/category.html", context)
 
 
+# Done
 def create_view(request):
     context = {}
 
@@ -137,6 +144,7 @@ def create_view(request):
     return render(request,"auctions/create.html", context)
 
 
+# Done
 def submit_view(request):
     if request.method == "POST":
         listing = Listing()
@@ -168,6 +176,7 @@ def submit_view(request):
         return redirect('index')
 
 
+# Done
 def listings_view(request, id):
     context = {}
 
@@ -183,7 +192,7 @@ def listings_view(request, id):
 
     if request.user.username:
         try:
-            if Watchlist.objects.get(user=request.user.username, listing=id):
+            if Watchlist.objects.get(user=request.user.username, listing=listing):
                 added=True
         except:
             added = False
@@ -216,4 +225,73 @@ def listings_view(request, id):
         "watchlist_count": watchlist_count
     }
 
-    return render(request,"auctions/listings.html", context)
+    return render(request, "auctions/listings.html", context)
+
+
+# Done
+def submit_bid_view(request, id):
+    current_bid = Listing.objects.get(id=id)
+    current_bid = current_bid.price
+
+    if request.method == "POST":
+        user_bid = request.POST["bid"]
+
+        if user_bid > current_bid:
+            listing_items = Listing.objects.get(id=id)
+            listing_items.price = user_bid
+            listing_items.save()
+
+            try:
+                if Bid.objects.filter(id=id):
+                    bidrow = Bid.objects.filter(id=id)
+                    bidrow.delete()
+
+                bidtable=Bid()
+                bidtable.user=request.user.username
+                bidtable.title=listing_items.title
+                bidtable.bid = user_bid
+                bidtable.save()
+                
+            except:
+                bidtable = Bid()
+                bidtable.user=request.user.username
+                bidtable.title = listing_items.title
+                bidtable.bid = user_bid
+                bidtable.save()
+
+            response = redirect('listings', id=id)
+            response.set_cookie('errorgreen', 'Bid successfull!', max_age=3)
+            return response
+        else :
+            response = redirect('listings',id=id)
+            response.set_cookie('error', 'Bid should be greater than current price!', max_age=3)
+            return response
+    else:
+        return redirect('index')
+
+# Done
+def submit_comment_view(request, listing):
+    if request.method == "POST":
+        comment = Comment()
+
+        comment.listing = listing
+        comment.user = request.user.username
+        comment.comment = request.POST['comment']
+
+        comment.save()
+        return redirect('listings', id=listing)
+    else :
+        return redirect('index')
+
+# Done
+def add_watchlist_view(request, id):
+    listing = Listing.objects.get(id=id)
+
+    if request.user.username:
+        watchlist = Watchlist()
+        watchlist.user = request.user.username
+        watchlist.listing = listing
+        watchlist.save()
+        return redirect('listings', id=id)
+    else:
+        return redirect('index')

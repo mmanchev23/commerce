@@ -14,6 +14,8 @@ urlpatterns = [
     path("create/", views.create_view, name="create"),
     path("submit/", views.submit_view, name="submit"),
     path("listings/<int:id>", views.listings_view, name="listings"),
+    path("submit-bid/<int:id>", views.submit_bid_view, name="submit-bid"),
+    path("submit-comment/<int:id>", views.submit_comment_view, name="comment"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
