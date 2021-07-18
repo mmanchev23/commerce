@@ -73,6 +73,7 @@ def login_view(request):
             context = {
                 "message": "Invalid username and/or password."
             }
+
             return render(request, "auctions/login.html", context)
     else:
         return render(request, "auctions/login.html")
@@ -81,3 +82,21 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
+
+
+def categories_view(request):
+    listings = Listing.objects.raw("SELECT * FROM auctions_listing GROUP BY category")
+    context = {}
+
+    try:
+        watchlists = Watchlist.objects.filter(user=request.user.username)
+        watchlists_count = len(watchlists)
+    except:
+        watchlists_count = None
+
+    context = {
+        "listings": listings,
+        "watchlists_count": watchlists_count
+    }
+
+    return render(request, "auctions/categories.html", context)
