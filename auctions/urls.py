@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.templatetags.static import static
+from commerce import settings
 
 
 urlpatterns = [
@@ -10,4 +12,7 @@ urlpatterns = [
     path("categories/", views.categories_view, name="categories"),
     path("category/<str:category>/", views.category_view, name="category"),
     path("create/", views.create_view, name="create"),
+    path("submit/", views.submit_view, name="submit"),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

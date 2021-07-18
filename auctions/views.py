@@ -135,3 +135,34 @@ def create_view(request):
     }
 
     return render(request,"auctions/create.html", context)
+
+
+def submit_view(request):
+    if request.method == "POST":
+        listing = Listing()
+        listing.user = request.user.username
+        listing.title = request.POST['title']
+        listing.description = request.POST['description']
+        listing.price = request.POST['price']
+        listing.category = request.POST['category']
+
+        if request.POST['image']:
+            listing.image = request.POST['image']
+
+        listing.save()
+        
+        all_listing = AllListing()
+        items = Listing.objects.all()
+        for item in items:
+            try:
+                if AllListing.objects.get(id=item.id):
+                    pass
+            except:
+                all_listing.title = item.title
+                all_listing.description = item.description
+                all_listing.image = item.image
+                all_listing.save()
+
+        return redirect('index')
+    else:
+        return redirect('index')
