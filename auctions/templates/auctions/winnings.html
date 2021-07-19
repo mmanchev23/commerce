@@ -18,8 +18,8 @@
                 <p class="card-text">{{ item.description }}</p>
                 {% for i in won_items %}
                   {% if item.listing == i.listing %}
-                    <p class="card-text"><b>Winning Bid:</b>${{ i.winprice }}</p>
-                    <p class="card-text"><b>Owner:</b>{{ i.user }}</p>
+                    <p class="card-text"><b>Winning Bid: </b>${{ i.winprice }}</p>
+                    <p class="card-text"><b>Owner: </b>{{ i.user }}</p>
                   {% endif %}
                 {% endfor %}
               </div>

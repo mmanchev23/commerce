@@ -14,12 +14,12 @@ class User(AbstractUser):
 
 class Listing(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
     title = models.CharField(max_length=100)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))])
     category = models.CharField(max_length=100)
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True, default='default_auction_image.jpg')
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
@@ -39,8 +39,8 @@ class Listing(models.Model):
 
 class Bid(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, default=None, null=True, blank=True)
     title = models.CharField(max_length=100)
     bid = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))])
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
@@ -52,8 +52,8 @@ class Bid(models.Model):
 
 class Comment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, default=None, null=True, blank=True)
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
@@ -64,8 +64,8 @@ class Comment(models.Model):
 
 class Watchlist(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, default=None, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
@@ -75,9 +75,9 @@ class Watchlist(models.Model):
 
 class ClosedBid(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
     winner = models.CharField(max_length=100)
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, default=None, null=True, blank=True)
     winprice = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))])
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
@@ -88,10 +88,10 @@ class ClosedBid(models.Model):
 
 class AllListing(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, default=None, null=True, blank=True)
     title = models.CharField(max_length=100)
     description = models.TextField()
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True, default='default_auction_image.jpg')
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
