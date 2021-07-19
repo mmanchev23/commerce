@@ -10,8 +10,13 @@ from datetime import datetime
 
 # Done
 def index_view(request):
-    listings = Listing.objects.all()
-    user = User.objects.get(username=request.user.username)
+    try:
+        listings = Listing.objects.all()
+        user = User.objects.get(username=request.user.username)
+    except:
+        listings = None
+        user = None
+
     context = {}
 
     try:
@@ -91,8 +96,13 @@ def logout_view(request):
 
 # Done
 def categories_view(request):
-    listings = Listing.objects.raw("SELECT * FROM auctions_listing GROUP BY category")
-    user = User.objects.get(username=request.user.username)
+    try:
+        listings = Listing.objects.raw("SELECT * FROM auctions_listing GROUP BY category")
+        user = User.objects.get(username=request.user.username)
+    except:
+        listings = None
+        user = None
+
     context = {}
 
     try:
@@ -111,8 +121,13 @@ def categories_view(request):
 
 # Done
 def category_view(request, category):
-    category_items = Listing.objects.filter(category=category)
-    user = User.objects.get(username=request.user.username)
+    try:
+        category_items = Listing.objects.filter(category=category)
+        user = User.objects.get(username=request.user.username)
+    except:
+        category_items = None
+        user = None
+
     context = {}
 
     try:
@@ -132,7 +147,11 @@ def category_view(request, category):
 
 # Done
 def create_view(request):
-    user = User.objects.get(username=request.user.username)
+    try:
+        user = User.objects.get(username=request.user.username)
+    except:
+        user = None
+
     context = {}
 
     try:
@@ -182,7 +201,11 @@ def submit_view(request):
 
 # Done
 def listings_view(request, id):
-    user = User.objects.get(username=request.user.username)
+    try:
+        user = User.objects.get(username=request.user.username)
+    except:
+        user = None
+
     context = {}
 
     try:
@@ -235,9 +258,13 @@ def listings_view(request, id):
 
 # Done
 def submit_bid_view(request, id):
-    user = User.objects.get(username=request.user.username)
-    current_bid = Listing.objects.get(id=id)
-    current_bid = current_bid.price
+    try:
+        user = User.objects.get(username=request.user.username)
+        current_bid = Listing.objects.get(id=id)
+        current_bid = current_bid.price
+    except:
+        user = None
+        current_bid = None
 
     if request.method == "POST":
         user_bid = request.POST["bid"]
@@ -277,8 +304,12 @@ def submit_bid_view(request, id):
 
 # Done
 def submit_comment_view(request, id):
-    listing = Listing.objects.get(id=id)
-    user = User.objects.get(username=request.user.username)
+    try:
+        listing = Listing.objects.get(id=id)
+        user = User.objects.get(username=request.user.username)
+    except:
+        listing = None
+        user = None
 
     if request.method == "POST":
         comment = Comment()
@@ -294,8 +325,12 @@ def submit_comment_view(request, id):
 
 # Done
 def add_watchlist_view(request, id):
-    listing = Listing.objects.get(id=id)
-    user = User.objects.get(username=request.user.username)
+    try:
+        listing = Listing.objects.get(id=id)
+        user = User.objects.get(username=request.user.username)
+    except:
+        listing = None
+        user = None
 
     if request.user.username:
         watchlist = Watchlist()
@@ -309,8 +344,12 @@ def add_watchlist_view(request, id):
 
 # Done
 def remove_watchlist_view(request, id):
-    listing = Listing.objects.get(id=id)
-    user = User.objects.get(username=request.user.username)
+    try:
+        listing = Listing.objects.get(id=id)
+        user = User.objects.get(username=request.user.username)
+    except:
+        listing = None
+        user = None
 
     if request.user.username:
         try:
@@ -325,7 +364,11 @@ def remove_watchlist_view(request, id):
 
 # Done
 def watchlist_view(request, username):
-    user = User.objects.get(username=username)
+    try:
+        user = User.objects.get(username=username)
+    except:
+        user = None
+
     context = {}
 
     if request.user.username:
@@ -365,7 +408,11 @@ def watchlist_view(request, username):
 
 # Done
 def close_bid_view(request, id):
-    user = User.objects.get(username=request.user.username)
+    try:
+        user = User.objects.get(username=request.user.username)
+    except:
+        user = None
+
     context = {}
 
     if request.user.username:
@@ -435,7 +482,11 @@ def close_bid_view(request, id):
 
 
 def my_winnings_view(request):
-    user = User.objects.get(username=request.user.username)
+    try:
+        user = User.objects.get(username=request.user.username)
+    except:
+        user = None
+        
     context = {}
 
     if request.user.username:
