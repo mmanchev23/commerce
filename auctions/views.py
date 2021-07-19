@@ -506,7 +506,7 @@ def my_winnings_view(request):
             wcount=None
 
         context = {
-            "items":items,
+            "items": items,
             "watchlist_count": watchlist_count,
             "won_items": won_items
         }
