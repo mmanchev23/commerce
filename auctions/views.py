@@ -486,7 +486,7 @@ def my_winnings_view(request):
         user = User.objects.get(username=request.user.username)
     except:
         user = None
-        
+
     context = {}
 
     if request.user.username:
@@ -497,18 +497,18 @@ def my_winnings_view(request):
             for won_item in won_items:
                 items.append(AllListing.objects.filter(listing=won_item.listing))
         except:
-            wonitems = None
+            won_items = None
             items = None
         try:
-            w = Watchlist.objects.filter(user=user)
-            wcount=len(w)
+            watchlist = Watchlist.objects.filter(user=user)
+            watchlist_count=len(watchlist)
         except:
             wcount=None
 
         context = {
             "items":items,
-            "wcount":wcount,
-            "wonitems":wonitems
+            "watchlist_count": watchlist_count,
+            "won_items": won_items
         }
 
         return render(request, 'auctions/winnings.html', context)
