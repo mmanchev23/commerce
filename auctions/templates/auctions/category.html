@@ -9,15 +9,16 @@
       <div class="card mb-3" style="max-width: 540px;" id="card-listings">
         <div class="row no-gutters">
           <div class="col-md-4">
-            <img src="{{ category_item.link }}" class="card-img" alt="...">
+            <img src="{{ category_item.image }}" class="card-img" alt="...">
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">{{ category_item .title}}</h5>
+              <h5 class="card-title">{{ category_item.title}}</h5>
               <p class="card-text">{{ category_item.description }}</p>
               <p class="card-text">${{ category_item.price }}</p>
-              <a href="{% url 'listingpage' category_item.id %}"><button class="btn btn-outline-success">Bid Now!</button></a>
-              <p class="card-text"><small class="text-muted">{{ category_item.time }}</small></p>
+              <a href="{% url 'listings' category_item.id %}"><button class="btn btn-outline-success">Bid Now!</button></a>
+              <p class="card-text">Created at: <small class="text-muted">{{ category_item.created_at }}</small></p>
+              <p class="card-text">Updated at: <small class="text-muted">{{ category_item.updated_at }}</small></p>
             </div>
           </div>
         </div>

@@ -8,21 +8,18 @@ from .models import *
 from datetime import datetime
 
 
-# Done
+context = {}
+
 def index_view(request):
     try:
         listings = Listing.objects.all()
         user = User.objects.get(username=request.user.username)
+        watchlists = Watchlist.objects.filter(user=user)
+        watchlist_count = len(watchlists)
     except:
         listings = None
         user = None
-
-    context = {}
-
-    try:
-        watchlist = Watchlist.objects.filter(user=user)
-        watchlist_count = len(watchlist)
-    except:
+        watchlists = None
         watchlist_count = None
 
     context = {
@@ -32,11 +29,7 @@ def index_view(request):
 
     return render(request, "auctions/index.html", context)
 
-
-# Done
 def register_view(request):
-    context = {}
-
     if request.method == "POST":
         username = request.POST["username"]
         email = request.POST["email"]
@@ -65,11 +58,7 @@ def register_view(request):
     else:
         return render(request, "auctions/register.html", context)
 
-
-# Done
 def login_view(request):
-    context = {}
-
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
@@ -87,28 +76,20 @@ def login_view(request):
     else:
         return render(request, "auctions/login.html")
 
-
-# Done
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
 
-
-# Done
 def categories_view(request):
     try:
         listings = Listing.objects.raw("SELECT * FROM auctions_listing GROUP BY category")
         user = User.objects.get(username=request.user.username)
-    except:
-        listings = None
-        user = None
-
-    context = {}
-
-    try:
         watchlists = Watchlist.objects.filter(user=user)
         watchlists_count = len(watchlists)
     except:
+        listings = None
+        user = None
+        watchlists = None
         watchlists_count = None
 
     context = {
@@ -118,22 +99,16 @@ def categories_view(request):
 
     return render(request, "auctions/categories.html", context)
 
-
-# Done
 def category_view(request, category):
     try:
         category_items = Listing.objects.filter(category=category)
         user = User.objects.get(username=request.user.username)
-    except:
-        category_items = None
-        user = None
-
-    context = {}
-
-    try:
         watchlists = Watchlist.objects.filter(user=user)
         watchlists_count = len(watchlists)
     except:
+        category_items = None
+        user = None
+        watchlists = None
         watchlists_count = None
 
     context = {
@@ -144,20 +119,14 @@ def category_view(request, category):
 
     return render(request, "auctions/category.html", context)
 
-
-# Done
 def create_view(request):
     try:
         user = User.objects.get(username=request.user.username)
-    except:
-        user = None
-
-    context = {}
-
-    try:
         watchlists = Watchlist.objects.filter(user=user)
         watchlists_count = len(watchlists)
     except:
+        user = None
+        watchlists = None
         watchlists_count = None
 
     context = {
@@ -166,12 +135,15 @@ def create_view(request):
 
     return render(request, "auctions/create.html", context)
 
-
-# Done
 def submit_view(request):
     if request.method == "POST":
+        try:
+            user = User.objects.get(username=request.user.username)
+        except:
+            user = None
+
         listing = Listing()
-        listing.user = request.user.username
+        listing.user = user
         listing.title = request.POST['title']
         listing.description = request.POST['description']
         listing.price = request.POST['price']
@@ -198,25 +170,16 @@ def submit_view(request):
     else:
         return redirect('index')
 
-
-# Done
 def listings_view(request, id):
     try:
         user = User.objects.get(username=request.user.username)
-    except:
-        user = None
-
-    context = {}
-
-    try:
         listing = Listing.objects.get(id=id)
-    except:
-        return redirect('index')
-
-    try:
         comments = Comment.objects.filter(listing=listing)
     except:
+        user = None
+        listing = None
         comments = None
+        return redirect('index')
 
     if request.user.username:
         try:
@@ -227,7 +190,7 @@ def listings_view(request, id):
 
         try:
             listing = Listing.objects.get(id=id)
-            if listing.owner == request.user.username:
+            if listing.user == user:
                 owner=True
             else:
                 owner=False
@@ -255,8 +218,6 @@ def listings_view(request, id):
 
     return render(request, "auctions/listings.html", context)
 
-
-# Done
 def submit_bid_view(request, id):
     try:
         user = User.objects.get(username=request.user.username)
@@ -302,7 +263,6 @@ def submit_bid_view(request, id):
     else:
         return redirect('index')
 
-# Done
 def submit_comment_view(request, id):
     try:
         listing = Listing.objects.get(id=id)
@@ -323,7 +283,6 @@ def submit_comment_view(request, id):
     else :
         return redirect('index')
 
-# Done
 def add_watchlist_view(request, id):
     try:
         listing = Listing.objects.get(id=id)
@@ -341,8 +300,6 @@ def add_watchlist_view(request, id):
     else:
         return redirect('index')
 
-
-# Done
 def remove_watchlist_view(request, id):
     try:
         listing = Listing.objects.get(id=id)
@@ -361,15 +318,11 @@ def remove_watchlist_view(request, id):
     else:
         return redirect('index')
 
-
-# Done
 def watchlist_view(request, username):
     try:
         user = User.objects.get(username=username)
     except:
         user = None
-
-    context = {}
 
     if request.user.username:
         try:
@@ -399,26 +352,19 @@ def watchlist_view(request, username):
 
             context = {
                 "items": None,
-                "wcount": watchlist_count
+                "watchlist_count": watchlist_count
             }
             return render(request, "auctions/watchlist.html", context)
     else:
         return redirect('index')
 
-
-# Done
 def close_bid_view(request, id):
-    try:
-        user = User.objects.get(username=request.user.username)
-    except:
-        user = None
-
-    context = {}
-
     if request.user.username:
         try:
             listing = Listing.objects.get(id=id)
+            user = User.objects.get(username=request.user.username)
         except:
+            user = None
             return redirect('index')
             
         closed_bid = ClosedBid()
@@ -482,28 +428,23 @@ def close_bid_view(request, id):
 
 
 def my_winnings_view(request):
-    try:
-        user = User.objects.get(username=request.user.username)
-    except:
-        user = None
-
-    context = {}
-
     if request.user.username:
         items = []
 
         try:
+            user = User.objects.get(username=request.user.username)
             won_items = ClosedBid.objects.filter(winner=user)
             for won_item in won_items:
                 items.append(AllListing.objects.filter(listing=won_item.listing))
         except:
+            user = None
             won_items = None
             items = None
         try:
             watchlist = Watchlist.objects.filter(user=user)
             watchlist_count=len(watchlist)
         except:
-            wcount=None
+            watchlist_count=None
 
         context = {
             "items": items,
