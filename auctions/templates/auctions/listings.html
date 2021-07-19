@@ -12,29 +12,30 @@
     {% if user.username %}
       <p>
         {% if added %}
-          <a href="{% url 'removewatchlist' listing.id %}"><button class="btn btn-danger">Remove from watchlist</button></a>
+          <a href="{% url 'remove-watchlist' listing.id %}"><button class="btn btn-danger">Remove from watchlist</button></a>
         {% else %}
-          <a href="{% url 'addwatchlist' listing.id %}"><button class="btn btn-success">Add to watchlist</button></a>
+          <a href="{% url 'add-watchlist' listing.id %}"><button class="btn btn-success">Add to watchlist</button></a>
         {% endif %}
       </p>
     {% endif %}
 
     <br>
 
-    <h3>Current Bid:${{ listing.price }}</h3>
+    <h3>Current Bid: ${{ listing.price }}</h3>
     {% if user.username %}
       {% if owner %}
         <br>
-        <a href="{% url 'closebid' listing.id %}"><button class="btn btn-warning">Close Bid</button></a>
+        <a href="{% url 'close-bid' listing.id %}"><button class="btn btn-warning">Close Bid</button></a>
         <br>
       {% endif %}
     {% endif %}
     <br>
     <p><b>Details:</b>
     <ul>
-        <li><b>Owner:</b>{{ listing.owner }}</li>
+        <li><b>Owner:</b>{{ listing.user }}</li>
         <li><b>Category:</b>{{ listing.category }}</li>
-        <li><b>Created on:</b>{{ listing.time }}</li>
+        <li><b>Created at:</b>{{ listing.created_at }}</li>
+        <li><b>Updated at:</b>{{ listing.updated_at }}</li>
     </ul>
     </p>
     {% if error %}
@@ -51,7 +52,7 @@
     {% if user.username %}
       <div class="container">
         <h4>Place your bid:</h4>
-        <form action="{% url 'bidsubmit' listing.id %}" method="POST">
+        <form action="{% url 'submit-bid' listing.id %}" method="POST">
             {% csrf_token %}
             <div class="form-row align-items-center">
               <div class="col-auto">
@@ -65,7 +66,7 @@
       </div>
       <br>
       <div class="container">
-        <form action="{% url 'cmntsubmit' listing.id %}" method="POST">
+        <form action="{% url 'comment' listing.id %}" method="POST">
           {% csrf_token %}
           <div class="form-group">
             <label for="exampleFormControlTextarea1"><b>Write a comment:</b></label>
@@ -88,7 +89,8 @@
                   <div class="card-body">
                     <h5 class="card-title">{{ comment.user }}</h5>
                     <p class="card-text">{{ comment.comment }}</p>
-                    <p class="card-text"><small class="text-muted">{{ comment.time }} UTC</small></p>
+                    <p class="card-text">Created at: <small class="text-muted">{{ comment.created_at }}</small></p>
+                    <p class="card-text">Updated at: <small class="text-muted">{{ comment.updated_at }}</small></p>
                   </div>
                 </div>
               </div>
