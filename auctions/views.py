@@ -148,17 +148,14 @@ def submit_view(request):
         listing.description = request.POST['description']
         listing.price = request.POST['price']
         listing.category = request.POST['category']
-
-        if request.POST['image']:
-            listing.image = request.POST['image']
-
+        listing.image = request.POST['image']
         listing.save()
 
         all_listing = AllListing()
         items = Listing.objects.all()
         for item in items:
             try:
-                if AllListing.objects.get(id=item.id):
+                if AllListing.objects.get(listing=item):
                     pass
             except:
                 all_listing.title = item.title
@@ -425,7 +422,6 @@ def close_bid_view(request, id):
 
     else:
         return redirect('index')
-
 
 def my_winnings_view(request):
     if request.user.username:
