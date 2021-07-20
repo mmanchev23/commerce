@@ -160,7 +160,6 @@ def submit_view(request):
             except:
                 all_listing.title = item.title
                 all_listing.description = item.description
-                all_listing.image = item.image
                 all_listing.save()
 
         return redirect('index')

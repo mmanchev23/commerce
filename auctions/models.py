@@ -19,7 +19,7 @@ class Listing(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))])
     category = models.CharField(max_length=100)
-    image = models.ImageField(null=True, blank=True, default='default_auction_image.jpg')
+    image = models.ImageField(null=True, blank=True, default='default_auction_image.jpg', upload_to='images/')
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
@@ -28,13 +28,10 @@ class Listing(models.Model):
 
     @property
     def imageURL(self):
-
-        try:
-            url = self.image.url
-        except:
-            url = ''
-
-        return url
+        if self.image:
+            return self.image.url
+        else:
+            return "images/default_auction_image.jpg"
 
 
 class Bid(models.Model):
@@ -91,7 +88,7 @@ class AllListing(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, default=None, null=True, blank=True)
     title = models.CharField(max_length=100)
     description = models.TextField()
-    image = models.ImageField(null=True, blank=True, default='default_auction_image.jpg')
+    image = models.ImageField(null=True, blank=True, default='default_auction_image.jpg', upload_to='images/')
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 

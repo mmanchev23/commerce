@@ -1,4 +1,6 @@
 from pathlib import Path
+import os
+import django_on_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -90,10 +92,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-import os
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'images')
 ]
@@ -101,3 +99,5 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/images/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'auctions/images')
+
+django_on_heroku.settings(locals())
