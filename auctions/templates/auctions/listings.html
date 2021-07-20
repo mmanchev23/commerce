@@ -4,10 +4,10 @@
   <div class="container">
     <h2>Listing:{{ listing.title }}</h2>
     <div class="container" style="text-align: center;">
-        <img src="{{ listing.image }}" width="30%" alt="...">
+        <img src="{{ listing.image.url }}" width="30%" alt="...">
     </div>
     <br>
-    <p><b>Description:</b>{{ listing.description }}</p>
+    <p><b>Description: </b>{{ listing.description }}</p>
     <br>
     {% if user.username %}
       <p>
@@ -32,10 +32,10 @@
     <br>
     <p><b>Details:</b>
     <ul>
-        <li><b>Owner:</b>{{ listing.user }}</li>
-        <li><b>Category:</b>{{ listing.category }}</li>
-        <li><b>Created at:</b>{{ listing.created_at }}</li>
-        <li><b>Updated at:</b>{{ listing.updated_at }}</li>
+        <li><b>Owner: </b>{{ listing.user }}</li>
+        <li><b>Category: </b>{{ listing.category }}</li>
+        <li><b>Created at: </b>{{ listing.created_at }}</li>
+        <li><b>Updated at: </b>{{ listing.updated_at }}</li>
     </ul>
     </p>
     {% if error %}
