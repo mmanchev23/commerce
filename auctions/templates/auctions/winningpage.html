@@ -11,9 +11,9 @@
             <p>You won this bid.</p>
         {% endif %}
         <ul>
-            <li><b>Owner:</b>{{closed_bid_list.owner}}</li>
-            <li><b>Winner:</b>{{closed_bid_list.winner}}</li>
-            <li><b>Winning Price:</b>{{closed_bid_list.winprice}}</li>
+            <li><b>Owner: </b>{{ closed_bid_list.user }}</li>
+            <li><b>Winner: </b>{{closed_bid_list.winner}}</li>
+            <li><b>Winning Price: </b>{{ closed_bid_list.winprice }}</li>
         </ul>
     </div>
 {% endblock %}

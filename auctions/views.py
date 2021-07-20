@@ -227,7 +227,7 @@ def submit_bid_view(request, id):
     if request.method == "POST":
         user_bid = request.POST["bid"]
 
-        if user_bid > current_bid:
+        if Decimal(user_bid) > current_bid:
             listing_items = Listing.objects.get(id=id)
             listing_items.price = user_bid
             listing_items.save()
@@ -361,23 +361,30 @@ def close_bid_view(request, id):
             listing = Listing.objects.get(id=id)
             user = User.objects.get(username=request.user.username)
         except:
+            listing = None
             user = None
             return redirect('index')
             
-        closed_bid = ClosedBid()
-        title = listing.title
-        closed_bid.owner = listing.owner
-        closed_bid.listingid = id
+        try:
+            closed_bid = ClosedBid()
+            title = listing.title
+            closed_bid.user = listing.user
+        except:
+            closed_bid = None
+            title = None
+            close_bid.user = None
+
         try:
             bidrow = Bid.objects.get(listing=listing, bid=listing.price)
-            closed_bid.winner = bidrow.user
+            closed_bid.winner = bidrow.user.username
             closed_bid.winprice = bidrow.bid
             closed_bid.save()
             bidrow.delete()
         except:
-            closed_bid.winner = listing.owner
+            closed_bid.winner = listing.user
             closed_bid.winprice = listing.price
             closed_bid.save()
+
         try:
             if Watchlist.objects.filter(listing=listing):
                 watchrow = Watchlist.objects.filter(listing=listing)
@@ -386,26 +393,30 @@ def close_bid_view(request, id):
                 pass
         except:
             pass
+
         try:
             crow = Comment.objects.filter(listing=listing)
             crow.delete()
         except:
             pass
+
         try:
             brow = Bid.objects.filter(listing=listing)
             brow.delete()
         except:
             pass
+
         try:
-            closed_bid_list=ClosedBid.objects.get(listing=listing)
+            closed_bid_list = ClosedBid.objects.filter(listing=listing)
         except:
-            closed_bid.owner = listing.owner
-            closed_bid.winner = listing.owner
+            closed_bid.user = listing.user
+            closed_bid.winner = listing.user
             closed_bid.winprice = listing.price
             closed_bid.save()
-            closed_bid_list=ClosedBid.objects.get(listing=listing)
+            closed_bid_list = ClosedBid.objects.filter(listing=listing)
 
         listing.delete()
+
         try:
             watchlist = Watchlist.objects.filter(user=user)
             watchlist_count = len(watchlist)
