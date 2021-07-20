@@ -2,9 +2,9 @@
 
 {% block body %}
   <div class="container">
-    <h2>Listing:{{ listing.title }}</h2>
-    <div class="container" style="text-align: center;">
-        <img src="{{ listing.image.url }}" width="30%" alt="...">
+    <h2>Listing: {{ listing.title }}</h2>
+    <div class="container" style="text-align: left;">
+        <img src="{{ listing.imageURL }}" width="30%" alt="...">
     </div>
     <br>
     <p><b>Description: </b>{{ listing.description }}</p>
