@@ -10,7 +10,7 @@ class User(AbstractUser):
     pass
 
     def __str__(self):
-        return self.username
+        return str(self.username)
 
 class Listing(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -24,7 +24,7 @@ class Listing(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     def __str__(self):
-        return self.title
+        return str(self.title)
 
     @property
     def imageURL(self):
@@ -47,7 +47,7 @@ class Bid(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     def __str__(self):
-        return self.title
+        return str(self.title)
 
 
 class Comment(models.Model):
@@ -59,7 +59,7 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     def __str__(self):
-        return self.comment
+        return str(self.comment)
 
 
 class Watchlist(models.Model):
@@ -70,7 +70,7 @@ class Watchlist(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 class ClosedBid(models.Model):
@@ -83,7 +83,7 @@ class ClosedBid(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 class AllListing(models.Model):
@@ -96,7 +96,7 @@ class AllListing(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
 
     def __str__(self):
-        return self.title
+        return str(self.title)
 
     @property
     def imageURL(self):
