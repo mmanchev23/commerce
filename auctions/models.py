@@ -97,10 +97,7 @@ class AllListing(models.Model):
 
     @property
     def imageURL(self):
-
-        try:
-            url = self.image.url
-        except:
-            url = ''
-
-        return url
+        if self.image:
+            return self.image.url
+        else:
+            return "images/default_auction_image.jpg"
