@@ -55,6 +55,7 @@
             <u>http://127.0.0.1:8000/</u>
         </code>
     </li>
+</ol>
 
 ## **Files & Directories**
 - `auctions` - all the files for the main app
