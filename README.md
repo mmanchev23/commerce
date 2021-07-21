@@ -1,7 +1,4 @@
-[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/mmanchev23/E-Buy/blob/master/LICENSE)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/mmanchev23/E-Buy/graphs/commit-activity)
-
-# **Healthy at Home 2**
+# **E-Buy** - [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 
 ## **How to start the project locally?**
 <ol>
@@ -79,7 +76,6 @@
   - `settings.py` - the settings file
   - `urls.py` - the routing file
   - `wsgi.py` - the file for the deployment
-- `LICENSE` - the license file
 - `Pipfile` - the virtual environment
 - `Pipfile.lock` - the lock for the virtual environment
 - `Procfile` - the main deployment file
@@ -90,9 +86,12 @@
 ## **Technologies**
 <ul>
     <li>
-        Programming Language - Python
+        Programming Languages - Python, Javascript, HTML5, CSS3
         <br/>
         <img alt="Python" src="https://img.shields.io/badge/python-%2314354C.svg?style=for-the-badge&logo=python&logoColor=white"/>
+        <img alt="JavaScript" src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/>
+        <img alt="HTML5" src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white"/>
+        <img alt="CSS3" src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white"/>
     </li>
     <li>
         Framework - Django
