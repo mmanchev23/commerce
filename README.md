@@ -79,7 +79,6 @@
   - `wsgi.py` - the file for the deployment
 - `Pipfile` - the virtual environment
 - `Pipfile.lock` - the lock for the virtual environment
-- `Procfile` - the main deployment file
 - `db.sqlite3` - the database
 - `manage.py` - the startpoint file
 - `requirements.txt` - the file container for all the necessery packages
