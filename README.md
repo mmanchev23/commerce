@@ -1,8 +1,10 @@
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/mmanchev23/commerce/blob/master/LICENSE)
 
-# **Commerce** - Project #2 from Harvard's CS50w-2020
+# **Commerce**
 
-## **Technologies**
+## Some kind of E-Bay clone. This is the third project for CS50's Web Programming with Python and JavaScript.
+
+### **Technologies**
 <ul>
     <li>
         Programming Languages - Python, HTML5, CSS3
@@ -34,7 +36,7 @@
     </li>
 </ul>
 
-## **How to start the project locally?**
+### **How to start the project locally?**
 1. Install [Python](https://www.python.org/downloads/)
 2. Open the folder with the project inside and install the required packages in the virtual environment:
    - `pip install -r requirements.txt`
@@ -43,7 +45,7 @@
    2. `python manage.py migrate`
    3. `python manage.py runserver`
 
-## **Files & Directories**
+### **Files & Directories**
 - `auctions` - app folder
   - `images` - images folder
   - `migrations` - migrations folder
