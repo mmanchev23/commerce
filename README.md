@@ -2,7 +2,7 @@
 
 # **Commerce** - Project #2 from Harvard's CS50w-2020
 
-### **Technologies**
+## **Technologies**
 <ul>
     <li>
         Programming Languages - Python, HTML5, CSS3
@@ -44,22 +44,22 @@
    3. `python manage.py runserver`
 
 ## **Files & Directories**
-- `auctions` - all the files for the main app
-  - `images` - the images for the project
-  - `migrations` - the migrations used in the database
-  - `static/auctions` - all the static files for the project
-  - `templates/auctions` - all the template files for the project
-  - `__init__.py` - the main file
-  - `admin.py` - the file for the registrations in the admin panel
-  - `apps.py` - the file for the app configuration
-  - `models.py` - the file containing the models
-  - `urls.py` - the routing file
-  - `views.py` - the file containing the views
-- `commerce` - all the files for the main project
-  - `__init__.py` - the main file
-  - `asgi.py` - the file for the deployment
-  - `settings.py` - the settings file
-  - `urls.py` - the routing file
-  - `wsgi.py` - the file for the deployment
+- `auctions` - app folder
+  - `images` - images folder
+  - `migrations` - migrations folder
+  - `static/auctions` - files folder
+  - `templates/auctions` - template folder
+  - `__init__.py` - constructor/package file
+  - `admin.py` - admin file
+  - `apps.py` - app configuration file
+  - `models.py` - models file
+  - `urls.py` - routing file
+  - `views.py` - views file
+- `commerce` - project file
+  - `__init__.py` - constructor/package file
+  - `asgi.py` - deployment file
+  - `settings.py` - settings file
+  - `urls.py` - routing file
+  - `wsgi.py` - deployment file
 - `manage.py` - the startpoint file
-- `requirements.txt` - the file container for all the necessery packages
+- `requirements.txt` - required packages
