@@ -8,8 +8,6 @@ from .models import *
 from datetime import datetime
 
 
-context = {}
-
 def index_view(request):
     try:
         listings = Listing.objects.all()
