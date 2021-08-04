@@ -1,7 +1,7 @@
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/mmanchev23/commerce/blob/master/LICENSE)
 [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/mmanchev23/commerce)
 
-# **Commerce**
+# **Commerce** - Final Project
 
 ## Project #2 for Harvard's CS50's Web Programming with Python and Javascript
 
