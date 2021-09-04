@@ -53,5 +53,4 @@
 - `manage.py` - startup file
 - `Pipfile` - python virtual environment file
 - `Pipfile.lock` - python virtual environment lock file
-- `Procfile` - deployment file
 - `requirements.txt` - required packages file
